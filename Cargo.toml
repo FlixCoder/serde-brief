@@ -1,27 +1,46 @@
 [package]
 authors = ["Flix <felix.dommes@rwth-aachen.de>"]
-categories = []
+categories = ["encoding", "parser-implementations", "no-std", "embedded"]
 description = "A brief, self-descriptive, serde-compatible binary format."
 documentation = "https://docs.rs/brief"
 edition = "2021"
+exclude = ["/tests/data", "/.github"]
 homepage = "https://github.com/FlixCoder/fhir-sdk"
-keywords = ["binary", "serde", "encoding", "data"]
+keywords = ["serde", "encoding", "binary", "data", "no-std", "no-std::no-alloc"]
 license = "MIT"
 name = "brief"
 readme = "README.md"
 repository = "https://github.com/FlixCoder/brief"
-rust-version = "1.75"
+rust-version = "1.81"
 version = "0.1.0"
 
 [features]
 default = []
+alloc = ["serde/alloc"]
+std = ["alloc", "serde/std", "tracing?/std"]
 tracing = ["dep:tracing"]
+heapless = ["dep:heapless"]
 
 [dependencies]
-serde = "1.0.210"
-tracing = { version = "0.1.40", optional = true }
+heapless = { version = "0.8.0", optional = true, features = ["serde"] }
+serde = { version = "1.0.210", default-features = false }
+tracing = { version = "0.1.40", optional = true, default-features = false, features = ["attributes"] }
+
+[dev-dependencies]
+serde = { version = "1.0.210", features = ["derive"] }
+serde_bytes = "0.11.15"
+serde_json = "1.0.128"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 
 
+# Also test the examples
+[[example]]
+name = "simple"
+path = "examples/simple.rs"
+test = true
+
+
+# Add more lints.
 [lints.rust]
 dead_code = "warn"
 missing_debug_implementations = "warn"
@@ -31,7 +50,8 @@ trivial_numeric_casts = "warn"
 unused_extern_crates = "warn"
 
 [lints.clippy]
-tabs_in_doc_comments = "allow"
+tabs_in_doc_comments = "allow" # Rustfmt setting.
+unnecessary_lazy_evaluations = "allow" # Performance better, because `Drop`.
 allow_attributes_without_reason = "warn"
 branches_sharing_code = "warn"
 cast_lossless = "warn"
@@ -109,3 +129,8 @@ unwrap_used = "warn"
 used_underscore_binding = "warn"
 useless_let_if_seq = "warn"
 verbose_file_reads = "warn"
+
+
+# Metadata for docs.rs to enable features and show everything.
+[package.metadata.docs.rs]
+all-features = true
