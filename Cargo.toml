@@ -2,15 +2,15 @@
 authors = ["Flix <felix.dommes@rwth-aachen.de>"]
 categories = ["encoding", "parser-implementations", "no-std", "no-std::no-alloc", "embedded"]
 description = "A brief, self-descriptive, serde-compatible binary format."
-documentation = "https://docs.rs/brief"
+documentation = "https://docs.rs/serde-brief"
 edition = "2021"
 exclude = ["/tests/data", "/.github"]
-homepage = "https://github.com/FlixCoder/fhir-sdk"
+homepage = "https://github.com/FlixCoder/serde-brief"
 keywords = ["serde", "encoding", "binary", "data", "no-std"]
 license = "MIT"
-name = "brief"
+name = "serde-brief"
 readme = "README.md"
-repository = "https://github.com/FlixCoder/brief"
+repository = "https://github.com/FlixCoder/serde-brief"
 rust-version = "1.81"
 version = "0.1.0"
 

@@ -1,11 +1,11 @@
 //! Test with JSON blobs.
 #![cfg(feature = "std")]
 
-use ::brief::value::Value;
+use ::serde_brief::value::Value;
 
 fn roundtrip(value: Value<'_>) {
-	let bytes = brief::to_vec(&value).expect("serializing");
-	let parsed: Value<'_> = brief::from_slice(&bytes).expect("deserializing");
+	let bytes = serde_brief::to_vec(&value).expect("serializing");
+	let parsed: Value<'_> = serde_brief::from_slice(&bytes).expect("deserializing");
 	assert_eq!(parsed, value);
 }
 

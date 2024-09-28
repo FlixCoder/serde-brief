@@ -1,10 +1,10 @@
-# Brief
+# Serde-Brief
 
-[![crates.io page](https://img.shields.io/crates/v/brief.svg)](https://crates.io/crates/brief)
-[![docs.rs page](https://docs.rs/brief/badge.svg)](https://docs.rs/brief/)
-![license: MIT](https://img.shields.io/crates/l/brief.svg)
+[![crates.io page](https://img.shields.io/crates/v/serde-brief.svg)](https://crates.io/crates/serde-brief)
+[![docs.rs page](https://docs.rs/serde-brief/badge.svg)](https://docs.rs/serde-brief/)
+![license: MIT](https://img.shields.io/crates/l/serde-brief.svg)
 
-Brief (German for letter) is a crate for encoding and decoding data into a binary format that is self-descriptive and [serde](https://docs.rs/serde/)-compatible.
+Serde-Brief (German for letter) is a crate for encoding and decoding data into a binary format that is self-descriptive and [serde](https://docs.rs/serde/)-compatible.
 
 ## Design Goals
 
@@ -29,7 +29,7 @@ By default, structs' field names and enums' variant names are encoded as strings
 
 ## Comparisons
 
-How does Brief compare to ..?
+How does Serde-Brief compare to ..?
 
 ### [Postcard](https://docs.rs/postcard/)
 
@@ -37,7 +37,7 @@ Postcard is NOT a self-describing format. It's encoding solely consists of the r
 
 Postcard is producing way smaller encoded data due to the missing schema information and field names. It is also faster.
 
-Brief supports decoding unknown data and parsing it into the requested structures regardless of additional fields or different orders.
+Serde-Brief supports decoding unknown data and parsing it into the requested structures regardless of additional fields or different orders.
 
 ### [Pot](https://docs.rs/pot/)
 
@@ -45,19 +45,19 @@ Pot is a self-describing format as well. It's encoding is more space-efficient d
 
 It is also not no-std compatible.
 
-Brief is faster most of the times, but less space-efficient.
+Serde-Brief is faster most of the times, but less space-efficient.
 
 ### [Serde_json](https://docs.rs/serde_json/)
 
 JSON is a self-describing format as well. However, it is text based and therefore requires string escaping. Bytes cannot be efficiently represented. However, JSON is widely adopted, as you already know :D
 
-In Brief, map keys can not only be strings. Unlike in JSON, keys can be nested data, so something like `HashMap<MyKeyStruct, MyValueStruct>` can be serialized and deserialized without issues.
+In Serde-Brief, map keys can not only be strings. Unlike in JSON, keys can be nested data, so something like `HashMap<MyKeyStruct, MyValueStruct>` can be serialized and deserialized without issues.
 
-Brief is both more space-efficient and faster.
+Serde-Brief is both more space-efficient and faster.
 
 ## Usage
 
-Add the library to your project with `cargo add brief`. By default, no features are enabled (currently), so it is no-std by default. You can enable use of `Vec`s and such with features like `alloc` or `std`.
+Add the library to your project with `cargo add serde-brief`. By default, no features are enabled (currently), so it is no-std by default. You can enable use of `Vec`s and such with features like `alloc` or `std`.
 
 ### Example Serialization/Deserialization
 
@@ -74,7 +74,7 @@ struct MyBorrowedData<'a> {
 }
 
 let data = MyBorrowedData { name: "Holla", age: 21 };
-let mut output: Vec<u8, 22> = brief::to_heapless_vec(&data).unwrap();
+let mut output: Vec<u8, 22> = serde_brief::to_heapless_vec(&data).unwrap();
 
 assert_eq!(output, [
     17,
@@ -83,7 +83,7 @@ assert_eq!(output, [
     18
 ]);
 
-let parsed: MyBorrowedData = brief::from_slice(&output).unwrap();
+let parsed: MyBorrowedData = serde_brief::from_slice(&output).unwrap();
 assert_eq!(parsed, data);
 ```
 

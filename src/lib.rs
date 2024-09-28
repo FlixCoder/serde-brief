@@ -1,6 +1,6 @@
-//! # Brief
+//! # Serde-Brief
 //!
-//! Brief (German for letter) is a crate for encoding and decoding data into a binary format that is self-descriptive and [serde](https://docs.rs/serde/)-compatible.
+//! Serde-Brief (German for letter) is a crate for encoding and decoding data into a binary format that is self-descriptive and [serde](https://docs.rs/serde/)-compatible.
 //!
 //! ## Design Goals
 //!
@@ -39,9 +39,9 @@
 //!
 //! ## Usage
 //!
-//! Add the library to your project with `cargo add brief`. By default, no features are enabled
-//! (currently), so it is no-std by default. You can enable use of `Vec`s and such with features
-//! like `alloc` or `std`.
+//! Add the library to your project with `cargo add serde-brief`. By default, no features are
+//! enabled (currently), so it is no-std by default. You can enable use of `Vec`s and such with
+//! features like `alloc` or `std`.
 //!
 //! ### Example Serialization/Deserialization
 //!
@@ -59,7 +59,7 @@
 //! }
 //!
 //! let data = MyBorrowedData { name: "Holla", age: 21 };
-//! let mut output: Vec<u8, 22> = brief::to_heapless_vec(&data).unwrap();
+//! let mut output: Vec<u8, 22> = serde_brief::to_heapless_vec(&data).unwrap();
 //!
 //! assert_eq!(
 //! 	output,
@@ -69,7 +69,7 @@
 //! 	]
 //! );
 //!
-//! let parsed: MyBorrowedData = brief::from_slice(&output).unwrap();
+//! let parsed: MyBorrowedData = serde_brief::from_slice(&output).unwrap();
 //! assert_eq!(parsed, data);
 //! ```
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -97,7 +97,7 @@ use ::std::io::{Read, Write};
 pub use self::value::{from_value, from_value_with_config, to_value, to_value_with_config};
 pub use self::{config::Config, de::Deserializer, error::Error, ser::Serializer};
 
-/// `Result` type that uses the `brief` error.
+/// `Result` type that uses the `serde-brief` error.
 pub type Result<T, E = Error> = ::core::result::Result<T, E>;
 
 /// Serialize a type into a slice of bytes using the given configuration. Returns the slice with the

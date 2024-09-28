@@ -12,18 +12,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "brief"
-version = "0.1.0"
-dependencies = [
- "heapless",
- "serde",
- "serde_bytes",
- "serde_json",
- "tracing",
- "tracing-subscriber",
-]
-
-[[package]]
 name = "byteorder"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -191,6 +179,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c8e3592472072e6e22e0a54d5904d9febf8508f65fb8552499a1abc7d1078c3a"
 dependencies = [
  "serde_derive",
+]
+
+[[package]]
+name = "serde-brief"
+version = "0.1.0"
+dependencies = [
+ "heapless",
+ "serde",
+ "serde_bytes",
+ "serde_json",
+ "tracing",
+ "tracing-subscriber",
 ]
 
 [[package]]

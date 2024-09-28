@@ -12,7 +12,7 @@ struct MyBorrowedData<'a> {
 fn main() {
 	let data = MyBorrowedData { name: "Holla", age: 21 };
 	let mut output = [0; 22];
-	let bytes = brief::to_slice(&data, &mut output).unwrap();
+	let bytes = serde_brief::to_slice(&data, &mut output).unwrap();
 
 	assert_eq!(
 		bytes,
@@ -22,7 +22,7 @@ fn main() {
 		]
 	);
 
-	let parsed: MyBorrowedData = brief::from_slice(bytes).unwrap();
+	let parsed: MyBorrowedData = serde_brief::from_slice(bytes).unwrap();
 	assert_eq!(parsed, data);
 }
 

@@ -1,4 +1,4 @@
-# Brief Binary Format
+# Serde-Brief Binary Format
 
 The format is close to JSON, modified to be better, binary and fit to [serde's data model](https://serde.rs/data-model.html).
 
@@ -23,8 +23,8 @@ The format includes information on the structure of the data.
 
 ## Defined Types
 
-Every value in Brief is prepended with a byte detailing its type.
-The Brief format currently contains these types:
+Every value in Serde-Brief is prepended with a byte detailing its type.
+The Serde-Brief format currently contains these types:
 
 | Type | Description | Byte value |
 | --- | --- | --- |
@@ -91,7 +91,7 @@ Values can have any type, so even maps can consist of arbitrarily complex keys a
 
 ## Mapping of Rust Types to Encoded Data
 
-The encoding/serialization and decoding/deserialization happens via `serde`, so it follows the [serde data model](https://serde.rs/data-model.html). Please familiarize yourself with its concept to fully understand the following. In any case, the following describes how Rust types are mapped to Brief format types.
+The encoding/serialization and decoding/deserialization happens via `serde`, so it follows the [serde data model](https://serde.rs/data-model.html). Please familiarize yourself with its concept to fully understand the following. In any case, the following describes how Rust types are mapped to Serde-Brief format types.
 
 There are two modes of the format. The first and default encodes structs as maps with keys being strings of the fields' names. The second encodes structs as maps with keys being unsigned integers, where the value denotes the index/position in the struct. Similarly, the same happens for enums. Variants are encoded either as string or as unsigned integer denoting their index (NOT discriminant).
 
@@ -107,7 +107,7 @@ Note that (at least currently) the deserializer can parse data regardless of whi
 
 - Smaller footprint: strings need more space in the encoding.
 
-### Serde Datatypes in Brief (String Representation)
+### Serde Datatypes in Serde-Brief (String Representation)
 
 The list of serde's types can be found [here](https://serde.rs/data-model.html), along with how Rust types are mapped to serde's types.
 
@@ -135,7 +135,7 @@ The list of serde's types can be found [here](https://serde.rs/data-model.html),
 | tuple variant | MapStart, String, SeqStart .. SeqEnd, MapEnd | Enum names are not used. Variants with values are a map with a single key-value pair. The key is the variant name as string. The value is a sequence of the encoded values. |
 | struct variant | MapStart, String, MapStart .. MapEnd, MapEnd | Enum names are not used. Variants with values are a map with a single key-value pair. The key is the variant name as string. The value is a map of the field names to their values. |
 
-### Serde Datatypes in Brief (Index Representation)
+### Serde Datatypes in Serde-Brief (Index Representation)
 
 The list of serde's types can be found [here](https://serde.rs/data-model.html), along with how Rust types are mapped to serde's types.
 
