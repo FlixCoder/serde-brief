@@ -11,7 +11,7 @@ Serde-Brief (German for letter) is a crate for encoding and decoding data into a
 Not necessarily in order of importance:
 
 - Convenient to use for developers: Integrates into the Rust ecosystem via `serde`, supporting all of its features in its derived implementations (e.g. renaming, flattening, ..).
-- Compatibility: Easy to add or re-order fields/variants without breakage.
+- Compatibility: Easy to add or re-order fields/variants without breakage. Detects wrong data types.
 - `#![no_std]` and std compatible.
 - Resource efficient: High performance, low memory usage.
 - Interoperability: Different architectures can communicate flawlessly.
