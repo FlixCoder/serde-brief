@@ -8,7 +8,8 @@
 //!
 //! - Convenient to use for developers: Integrates into the Rust ecosystem via `serde`, supporting
 //!   all of its features in its derived implementations (e.g. renaming, flattening, ..).
-//! - Compatibility: Easy to add or re-order fields/variants without breakage.
+//! - Compatibility: Easy to add or re-order fields/variants without breakage. Detects wrong data
+//!   types.
 //! - `#![no_std]` and std compatible.
 //! - Resource efficient: High performance, low memory usage.
 //! - Interoperability: Different architectures can communicate flawlessly.
@@ -71,6 +72,28 @@
 //!
 //! let parsed: MyBorrowedData = serde_brief::from_slice(&output).unwrap();
 //! assert_eq!(parsed, data);
+//! ```
+//!
+//! ### Bytes Serialization/Deserialization
+//!
+//! Serde serializes byte arrays, such as `[u8; N]` or `Vec<u8>`, as sequences by default (due to
+//! missing specialization support in Rust). To serialize these types as proper bytes, making the
+//! format way more efficient, you can use `serde_bytes` or your own serde-trait-implementations.
+//!
+//! Example using `serde_bytes`:
+//!
+//! ```rust
+//! use serde::{Deserialize, Serialize};
+//! use serde_bytes::{ByteBuf, Bytes};
+//!
+//! #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
+//! struct MyData<'a> {
+//! 	owned_bytes: ByteBuf,
+//! 	#[serde(borrow)]
+//! 	borrowed_bytes: &'a Bytes,
+//! 	#[serde(with = "serde_bytes")]
+//! 	byte_vec: Vec<u8>,
+//! }
 //! ```
 #![cfg_attr(not(feature = "std"), no_std)]
 
