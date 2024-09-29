@@ -160,7 +160,7 @@ The index representation does not work with internally tagged enums (`#[serde(ta
 | newtype struct | Any | Structs names are not used. Newtype structs (only one field) are encoded as their inner value (transparent encoding). |
 | tuple struct | SeqStart .. SeqEnd | Struct names are not used. Therefore encoded just as a tuple (so as a sequence). |
 | struct | MapStart .. MapEnd | Struct names are not used. Encoded as a map with keys being the field indices (`u32`) and values being their encoded values. |
-| unit variant | String | Enum names are not used. Variants without data are just the variant index as unsigned integer (`u32`). |
-| newtype variant | MapStart, String, Any, MapEnd | Enum names are not used. Variants with values are a map with a single key-value pair. The key is the variant index as unsigned integer (`u32`). The value is the encoded value. |
-| tuple variant | MapStart, String, SeqStart .. SeqEnd, MapEnd | Enum names are not used. Variants with values are a map with a single key-value pair. The key is the variant index as unsigned integer (`u32`). The value is a sequence of the encoded values. |
-| struct variant | MapStart, String, MapStart .. MapEnd, MapEnd | Enum names are not used. Variants with values are a map with a single key-value pair. The key is the variant index as unsigned integer (`u32`). The value is a map of the field indices (`u32`) to their values. |
+| unit variant | UnsignedInt | Enum names are not used. Variants without data are just the variant index as unsigned integer (`u32`). |
+| newtype variant | MapStart, UnsignedInt, Any, MapEnd | Enum names are not used. Variants with values are a map with a single key-value pair. The key is the variant index as unsigned integer (`u32`). The value is the encoded value. |
+| tuple variant | MapStart, UnsignedInt, SeqStart .. SeqEnd, MapEnd | Enum names are not used. Variants with values are a map with a single key-value pair. The key is the variant index as unsigned integer (`u32`). The value is a sequence of the encoded values. |
+| struct variant | MapStart, UnsignedInt, MapStart .. MapEnd, MapEnd | Enum names are not used. Variants with values are a map with a single key-value pair. The key is the variant index as unsigned integer (`u32`). The value is a map of the field indices (`u32`) to their values. |
