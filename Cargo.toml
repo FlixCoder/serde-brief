@@ -39,6 +39,11 @@ name = "simple"
 path = "examples/simple.rs"
 test = true
 
+[[example]]
+name = "bytes"
+path = "examples/bytes.rs"
+test = true
+
 
 # Add more lints.
 [lints.rust]
