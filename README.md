@@ -91,6 +91,8 @@ assert_eq!(parsed, data);
 
 For now, see [here](https://github.com/FlixCoder/rust_serialization_benchmark/tree/add-brief).
 
+If you are interested in maximum performance, please try using profile-guided optimization. It measurably improves performance on this library. For further information, see the [PGO usage docs](./docs/pgo.md).
+
 ### Results
 
 The serialization/deserialization is reasonably fast. Between postcard and serde_json mostly. The data-size is also between postcard and JSON.

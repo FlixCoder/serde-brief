@@ -16,8 +16,8 @@
 //!
 //! ## More Detailed Documentation
 //!
-//! See more detailed documentation in [the docs module](./docs/index.html). It contains information
-//! on the binary representation format.
+//! See more detailed documentation in [the docs module](./docs/index.html). It also contains
+//! information on the binary representation format.
 //!
 //! ## Feature Flags
 //!
@@ -95,6 +95,11 @@
 //! 	byte_vec: Vec<u8>,
 //! }
 //! ```
+//!
+//! ## Performance
+//!
+//! If you are interested in maximum performance, please take a look at the [PGO usage
+//! documentation](./docs/pgo/index.html).
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "alloc")]
