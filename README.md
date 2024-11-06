@@ -89,7 +89,9 @@ assert_eq!(parsed, data);
 
 ## Benchmarks
 
-For now, see [here](https://github.com/FlixCoder/rust_serialization_benchmark/tree/add-brief).
+For benchmark results, [see here](https://github.com/djkoloski/rust_serialization_benchmark).
+
+I expect there to be plenty room for performance improvements still.
 
 If you are interested in maximum performance, please try using profile-guided optimization. It measurably improves performance on this library. For further information, see the [PGO usage docs](./docs/pgo.md).
 
