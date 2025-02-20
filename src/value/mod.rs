@@ -280,7 +280,7 @@ impl DerefMut for OwnedValue {
 	}
 }
 
-impl<'a> ::core::fmt::Display for Value<'a> {
+impl ::core::fmt::Display for Value<'_> {
 	fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
 		match self {
 			Value::Null => f.write_str("null"),
@@ -343,7 +343,7 @@ impl ::core::fmt::Display for Float {
 	}
 }
 
-impl<'a> Serialize for Value<'a> {
+impl Serialize for Value<'_> {
 	fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
 	where
 		S: ::serde::Serializer,
@@ -568,7 +568,7 @@ impl<'de> ::serde::de::Visitor<'de> for ValueVisitor<'de> {
 	}
 }
 
-impl<'a> PartialEq for Value<'a> {
+impl PartialEq for Value<'_> {
 	fn eq(&self, other: &Self) -> bool {
 		match (self, other) {
 			(Self::Null, Self::Null) => true,
@@ -584,7 +584,7 @@ impl<'a> PartialEq for Value<'a> {
 	}
 }
 
-impl<'a> PartialEq<bool> for Value<'a> {
+impl PartialEq<bool> for Value<'_> {
 	fn eq(&self, other: &bool) -> bool {
 		match self {
 			Value::Bool(b) => b == other,
@@ -593,7 +593,7 @@ impl<'a> PartialEq<bool> for Value<'a> {
 	}
 }
 
-impl<'a> PartialEq<u128> for Value<'a> {
+impl PartialEq<u128> for Value<'_> {
 	fn eq(&self, other: &u128) -> bool {
 		match self {
 			Value::Integer(Integer::Unsigned(int)) => int == other,
@@ -602,7 +602,7 @@ impl<'a> PartialEq<u128> for Value<'a> {
 	}
 }
 
-impl<'a> PartialEq<i128> for Value<'a> {
+impl PartialEq<i128> for Value<'_> {
 	fn eq(&self, other: &i128) -> bool {
 		match self {
 			Value::Integer(Integer::Signed(int)) => int == other,
@@ -611,7 +611,7 @@ impl<'a> PartialEq<i128> for Value<'a> {
 	}
 }
 
-impl<'a> PartialEq<f32> for Value<'a> {
+impl PartialEq<f32> for Value<'_> {
 	fn eq(&self, other: &f32) -> bool {
 		match self {
 			Value::Float(Float::F32(float)) => float == other,
@@ -621,7 +621,7 @@ impl<'a> PartialEq<f32> for Value<'a> {
 	}
 }
 
-impl<'a> PartialEq<f64> for Value<'a> {
+impl PartialEq<f64> for Value<'_> {
 	fn eq(&self, other: &f64) -> bool {
 		match self {
 			Value::Float(Float::F32(float)) => f64::from(*float) == *other,
@@ -631,7 +631,7 @@ impl<'a> PartialEq<f64> for Value<'a> {
 	}
 }
 
-impl<'a> PartialEq<[u8]> for Value<'a> {
+impl PartialEq<[u8]> for Value<'_> {
 	fn eq(&self, other: &[u8]) -> bool {
 		match self {
 			Value::Bytes(bytes) => bytes.as_ref() == other,
@@ -640,7 +640,7 @@ impl<'a> PartialEq<[u8]> for Value<'a> {
 	}
 }
 
-impl<'a> PartialEq<str> for Value<'a> {
+impl PartialEq<str> for Value<'_> {
 	fn eq(&self, other: &str) -> bool {
 		match self {
 			Value::String(s) => s == other,
@@ -656,112 +656,112 @@ impl<'a> From<Option<Value<'a>>> for Value<'a> {
 	}
 }
 
-impl<'a> From<()> for Value<'a> {
+impl From<()> for Value<'_> {
 	#[inline]
 	fn from(_: ()) -> Self {
 		Value::Null
 	}
 }
 
-impl<'a> From<bool> for Value<'a> {
+impl From<bool> for Value<'_> {
 	#[inline]
 	fn from(value: bool) -> Self {
 		Value::Bool(value)
 	}
 }
 
-impl<'a> From<u8> for Value<'a> {
+impl From<u8> for Value<'_> {
 	#[inline]
 	fn from(value: u8) -> Self {
 		Value::Integer(Integer::Unsigned(u128::from(value)))
 	}
 }
 
-impl<'a> From<i8> for Value<'a> {
+impl From<i8> for Value<'_> {
 	#[inline]
 	fn from(value: i8) -> Self {
 		Value::Integer(Integer::Signed(i128::from(value)))
 	}
 }
 
-impl<'a> From<u16> for Value<'a> {
+impl From<u16> for Value<'_> {
 	#[inline]
 	fn from(value: u16) -> Self {
 		Value::Integer(Integer::Unsigned(u128::from(value)))
 	}
 }
 
-impl<'a> From<i16> for Value<'a> {
+impl From<i16> for Value<'_> {
 	#[inline]
 	fn from(value: i16) -> Self {
 		Value::Integer(Integer::Signed(i128::from(value)))
 	}
 }
 
-impl<'a> From<u32> for Value<'a> {
+impl From<u32> for Value<'_> {
 	#[inline]
 	fn from(value: u32) -> Self {
 		Value::Integer(Integer::Unsigned(u128::from(value)))
 	}
 }
 
-impl<'a> From<i32> for Value<'a> {
+impl From<i32> for Value<'_> {
 	#[inline]
 	fn from(value: i32) -> Self {
 		Value::Integer(Integer::Signed(i128::from(value)))
 	}
 }
 
-impl<'a> From<u64> for Value<'a> {
+impl From<u64> for Value<'_> {
 	#[inline]
 	fn from(value: u64) -> Self {
 		Value::Integer(Integer::Unsigned(u128::from(value)))
 	}
 }
 
-impl<'a> From<i64> for Value<'a> {
+impl From<i64> for Value<'_> {
 	#[inline]
 	fn from(value: i64) -> Self {
 		Value::Integer(Integer::Signed(i128::from(value)))
 	}
 }
 
-impl<'a> From<usize> for Value<'a> {
+impl From<usize> for Value<'_> {
 	#[inline]
 	fn from(value: usize) -> Self {
 		Value::Integer(Integer::Unsigned(value as u128))
 	}
 }
 
-impl<'a> From<isize> for Value<'a> {
+impl From<isize> for Value<'_> {
 	#[inline]
 	fn from(value: isize) -> Self {
 		Value::Integer(Integer::Signed(value as i128))
 	}
 }
 
-impl<'a> From<u128> for Value<'a> {
+impl From<u128> for Value<'_> {
 	#[inline]
 	fn from(value: u128) -> Self {
 		Value::Integer(Integer::Unsigned(value))
 	}
 }
 
-impl<'a> From<i128> for Value<'a> {
+impl From<i128> for Value<'_> {
 	#[inline]
 	fn from(value: i128) -> Self {
 		Value::Integer(Integer::Signed(value))
 	}
 }
 
-impl<'a> From<f32> for Value<'a> {
+impl From<f32> for Value<'_> {
 	#[inline]
 	fn from(value: f32) -> Self {
 		Value::Float(Float::F32(value))
 	}
 }
 
-impl<'a> From<f64> for Value<'a> {
+impl From<f64> for Value<'_> {
 	#[inline]
 	fn from(value: f64) -> Self {
 		Value::Float(Float::F64(value))
@@ -775,7 +775,7 @@ impl<'a> From<&'a [u8]> for Value<'a> {
 	}
 }
 
-impl<'a> From<Vec<u8>> for Value<'a> {
+impl From<Vec<u8>> for Value<'_> {
 	#[inline]
 	fn from(value: Vec<u8>) -> Self {
 		Value::Bytes(Cow::Owned(value))
@@ -796,7 +796,7 @@ impl<'a> From<&'a str> for Value<'a> {
 	}
 }
 
-impl<'a> From<String> for Value<'a> {
+impl From<String> for Value<'_> {
 	#[inline]
 	fn from(value: String) -> Self {
 		Value::String(Cow::Owned(value))

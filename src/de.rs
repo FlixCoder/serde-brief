@@ -191,13 +191,13 @@ where
 			Type::UnsignedInt => {
 				_ = self.input.read_byte()?;
 				let value = u128::decode(&mut self.input)?;
-				if value <= u8::MAX as u128 {
+				if value <= u128::from(u8::MAX) {
 					visitor.visit_u8(value as u8)
-				} else if value <= u16::MAX as u128 {
+				} else if value <= u128::from(u16::MAX) {
 					visitor.visit_u16(value as u16)
-				} else if value <= u32::MAX as u128 {
+				} else if value <= u128::from(u32::MAX) {
 					visitor.visit_u32(value as u32)
-				} else if value <= u64::MAX as u128 {
+				} else if value <= u128::from(u64::MAX) {
 					visitor.visit_u64(value as u64)
 				} else {
 					visitor.visit_u128(value)
@@ -241,7 +241,7 @@ where
 	}
 }
 
-impl<'a, 'de, I, B> ::serde::Deserializer<'de> for &'a mut Deserializer<I, B>
+impl<'de, I, B> ::serde::Deserializer<'de> for &mut Deserializer<I, B>
 where
 	I: Input<'de>,
 	B: Buffer,
@@ -991,7 +991,7 @@ where
 #[derive(Debug)]
 pub struct SequenceDeserializer<'a, I, B>(&'a mut Deserializer<I, B>);
 
-impl<'a, 'de, I, B> ::serde::de::SeqAccess<'de> for SequenceDeserializer<'a, I, B>
+impl<'de, I, B> ::serde::de::SeqAccess<'de> for SequenceDeserializer<'_, I, B>
 where
 	I: Input<'de>,
 	B: Buffer,
@@ -1023,7 +1023,7 @@ where
 #[derive(Debug)]
 pub struct ByteSequenceDeserializer<'a>(&'a [u8]);
 
-impl<'a, 'de> ::serde::de::SeqAccess<'de> for ByteSequenceDeserializer<'a> {
+impl<'de> ::serde::de::SeqAccess<'de> for ByteSequenceDeserializer<'_> {
 	type Error = Error;
 
 	#[inline]
@@ -1050,7 +1050,7 @@ impl<'a, 'de> ::serde::de::SeqAccess<'de> for ByteSequenceDeserializer<'a> {
 #[derive(Debug)]
 pub struct CharSequenceDeserializer<'a>(::core::str::Chars<'a>);
 
-impl<'a, 'de> ::serde::de::SeqAccess<'de> for CharSequenceDeserializer<'a> {
+impl<'de> ::serde::de::SeqAccess<'de> for CharSequenceDeserializer<'_> {
 	type Error = Error;
 
 	#[inline]
@@ -1076,7 +1076,7 @@ impl<'a, 'de> ::serde::de::SeqAccess<'de> for CharSequenceDeserializer<'a> {
 #[derive(Debug)]
 pub struct MapDeserializer<'a, I, B>(&'a mut Deserializer<I, B>);
 
-impl<'a, 'de, I, B> ::serde::de::MapAccess<'de> for MapDeserializer<'a, I, B>
+impl<'de, I, B> ::serde::de::MapAccess<'de> for MapDeserializer<'_, I, B>
 where
 	I: Input<'de>,
 	B: Buffer,
@@ -1137,7 +1137,7 @@ where
 #[derive(Debug)]
 pub struct EnumMapDeserializer<'a, I, B>(&'a mut Deserializer<I, B>);
 
-impl<'a, 'de, I, B> ::serde::de::EnumAccess<'de> for EnumMapDeserializer<'a, I, B>
+impl<'de, I, B> ::serde::de::EnumAccess<'de> for EnumMapDeserializer<'_, I, B>
 where
 	I: Input<'de>,
 	B: Buffer,
@@ -1158,7 +1158,7 @@ where
 	}
 }
 
-impl<'a, 'de, I, B> ::serde::de::VariantAccess<'de> for EnumMapDeserializer<'a, I, B>
+impl<'de, I, B> ::serde::de::VariantAccess<'de> for EnumMapDeserializer<'_, I, B>
 where
 	I: Input<'de>,
 	B: Buffer,

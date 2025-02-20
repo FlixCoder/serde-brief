@@ -50,7 +50,7 @@ fn test_borrowing() {
 fn test_deser_calls_borrowed() {
 	struct Test;
 	struct Visitor;
-	impl<'a, 'de> ::serde::de::Visitor<'de> for &'a mut Visitor {
+	impl<'de> ::serde::de::Visitor<'de> for &mut Visitor {
 		type Value = Test;
 
 		fn expecting(&self, formatter: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {

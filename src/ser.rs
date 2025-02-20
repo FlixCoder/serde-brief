@@ -392,7 +392,7 @@ where
 
 		/// A writer that writes the formatted string into the output.
 		struct OutputWriter<'a, O>(&'a mut O);
-		impl<'a, O: Output> Write for OutputWriter<'a, O> {
+		impl<O: Output> Write for OutputWriter<'_, O> {
 			fn write_str(&mut self, s: &str) -> ::core::fmt::Result {
 				self.0.write_all(s.as_bytes()).map_err(|_| ::core::fmt::Error)
 			}
@@ -413,7 +413,7 @@ where
 	}
 }
 
-impl<'a, O> ::serde::ser::SerializeSeq for &'a mut Serializer<O>
+impl<O> ::serde::ser::SerializeSeq for &mut Serializer<O>
 where
 	O: Output,
 {
@@ -437,7 +437,7 @@ where
 	}
 }
 
-impl<'a, O> ::serde::ser::SerializeTuple for &'a mut Serializer<O>
+impl<O> ::serde::ser::SerializeTuple for &mut Serializer<O>
 where
 	O: Output,
 {
@@ -461,7 +461,7 @@ where
 	}
 }
 
-impl<'a, O> ::serde::ser::SerializeTupleStruct for &'a mut Serializer<O>
+impl<O> ::serde::ser::SerializeTupleStruct for &mut Serializer<O>
 where
 	O: Output,
 {
@@ -485,7 +485,7 @@ where
 	}
 }
 
-impl<'a, O> ::serde::ser::SerializeTupleVariant for &'a mut Serializer<O>
+impl<O> ::serde::ser::SerializeTupleVariant for &mut Serializer<O>
 where
 	O: Output,
 {
@@ -510,7 +510,7 @@ where
 	}
 }
 
-impl<'a, O> ::serde::ser::SerializeMap for &'a mut Serializer<O>
+impl<O> ::serde::ser::SerializeMap for &mut Serializer<O>
 where
 	O: Output,
 {
@@ -571,7 +571,7 @@ impl<'a, O> StructSerializer<'a, O> {
 	}
 }
 
-impl<'a, O> ::serde::ser::SerializeStruct for StructSerializer<'a, O>
+impl<O> ::serde::ser::SerializeStruct for StructSerializer<'_, O>
 where
 	O: Output,
 {
@@ -608,7 +608,7 @@ where
 	}
 }
 
-impl<'a, O> ::serde::ser::SerializeStructVariant for StructSerializer<'a, O>
+impl<O> ::serde::ser::SerializeStructVariant for StructSerializer<'_, O>
 where
 	O: Output,
 {

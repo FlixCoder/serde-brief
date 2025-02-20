@@ -11,7 +11,7 @@ license = "MIT"
 name = "serde-brief"
 readme = "README.md"
 repository = "https://github.com/FlixCoder/serde-brief"
-rust-version = "1.81"
+rust-version = "1.85"
 version = "0.1.1"
 
 [features]
@@ -29,8 +29,8 @@ tracing = { version = "0.1.40", optional = true, default-features = false, featu
 [dev-dependencies]
 serde = { version = "1.0.210", features = ["derive"] }
 serde_bytes = "0.11.15"
-serde_json = "1.0.128"
-tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
+serde_json = "1.0.139"
+tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
 
 
 # Also test the examples
