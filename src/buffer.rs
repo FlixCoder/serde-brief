@@ -36,20 +36,12 @@ impl Buffer for () {
 
 	#[cfg_attr(feature = "tracing", ::tracing::instrument(skip(self, bytes)))]
 	fn extend_from_slice(&mut self, bytes: &[u8]) -> Result<()> {
-		if bytes.is_empty() {
-			Ok(())
-		} else {
-			Err(Error::BufferTooSmall)
-		}
+		if bytes.is_empty() { Ok(()) } else { Err(Error::BufferTooSmall) }
 	}
 
 	#[cfg_attr(feature = "tracing", ::tracing::instrument(skip(self)))]
 	fn reserve_slice(&mut self, len: usize) -> Result<&mut [u8]> {
-		if len == 0 {
-			Ok(&mut [])
-		} else {
-			Err(Error::BufferTooSmall)
-		}
+		if len == 0 { Ok(&mut []) } else { Err(Error::BufferTooSmall) }
 	}
 }
 

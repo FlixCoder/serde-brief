@@ -3,7 +3,7 @@
 use ::serde_bytes::Bytes;
 
 use super::*;
-use crate::{format::Type, Error};
+use crate::{Error, format::Type};
 
 #[test]
 fn test_type_mismatch() {

@@ -174,71 +174,43 @@ impl<'a> Value<'a> {
 	/// Return the inner bool if this is a [Value::Bool].
 	#[must_use]
 	pub const fn as_bool(&self) -> Option<bool> {
-		if let Value::Bool(v) = self {
-			Some(*v)
-		} else {
-			None
-		}
+		if let Value::Bool(v) = self { Some(*v) } else { None }
 	}
 
 	/// Return the inner int if this is a [Value::Integer].
 	#[must_use]
 	pub const fn as_int(&self) -> Option<Integer> {
-		if let Value::Integer(v) = self {
-			Some(*v)
-		} else {
-			None
-		}
+		if let Value::Integer(v) = self { Some(*v) } else { None }
 	}
 
 	/// Return the inner float if this is a [Value::Float].
 	#[must_use]
 	pub const fn as_float(&self) -> Option<Float> {
-		if let Value::Float(v) = self {
-			Some(*v)
-		} else {
-			None
-		}
+		if let Value::Float(v) = self { Some(*v) } else { None }
 	}
 
 	/// Return the inner bytes if this is a [Value::Bytes].
 	#[must_use]
 	pub fn as_bytes(&self) -> Option<&[u8]> {
-		if let Value::Bytes(v) = self {
-			Some(v)
-		} else {
-			None
-		}
+		if let Value::Bytes(v) = self { Some(v) } else { None }
 	}
 
 	/// Return the inner string if this is a [Value::String].
 	#[must_use]
 	pub fn as_string(&self) -> Option<&str> {
-		if let Value::String(v) = self {
-			Some(v)
-		} else {
-			None
-		}
+		if let Value::String(v) = self { Some(v) } else { None }
 	}
 
 	/// Return the inner array if this is a [Value::Array].
 	#[must_use]
 	pub const fn as_array(&self) -> Option<&VecDeque<Value<'a>>> {
-		if let Value::Array(v) = self {
-			Some(v)
-		} else {
-			None
-		}
+		if let Value::Array(v) = self { Some(v) } else { None }
 	}
 
 	/// Return the inner map if this is a [Value::Map].
 	#[must_use]
 	pub const fn as_map(&self) -> Option<&VecDeque<(Value<'a>, Value<'a>)>> {
-		if let Value::Map(v) = self {
-			Some(v)
-		} else {
-			None
-		}
+		if let Value::Map(v) = self { Some(v) } else { None }
 	}
 
 	/// Iterate over the inner values if this is a [Value::Array] or [Value::Map].

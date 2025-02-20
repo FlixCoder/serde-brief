@@ -1,8 +1,8 @@
 //! Data format internals.
 
 use crate::{
-	io::{Input, Output},
 	Error, Result,
+	io::{Input, Output},
 };
 
 /// The binary type identifier.

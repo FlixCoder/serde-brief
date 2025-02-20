@@ -4,7 +4,7 @@ use ::core::num::NonZeroUsize;
 use ::serde_bytes::Bytes;
 
 use super::*;
-use crate::{format::Type, Error};
+use crate::{Error, format::Type};
 
 #[test]
 fn test_string_is_bytes() {

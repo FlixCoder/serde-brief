@@ -287,11 +287,7 @@ impl<'de> ::serde::de::Deserializer<'de> for ValueDeserializer<'de> {
 	where
 		V: serde::de::Visitor<'de>,
 	{
-		if matches!(&self.0, Value::Null) {
-			visitor.visit_none()
-		} else {
-			visitor.visit_some(self)
-		}
+		if matches!(&self.0, Value::Null) { visitor.visit_none() } else { visitor.visit_some(self) }
 	}
 
 	#[inline]

@@ -8,10 +8,10 @@ use ::core::str;
 use ::serde::de::{IntoDeserializer, Unexpected, Visitor};
 
 use crate::{
+	Error, Result,
 	buffer::Buffer,
 	format::{Type, VarInt},
 	io::Input,
-	Error, Result,
 };
 
 /// The deserializer for the binary format.
@@ -980,7 +980,7 @@ where
 						Type::SeqStart,
 						Type::MapStart,
 					],
-				))
+				));
 			}
 		}
 		visitor.visit_unit()

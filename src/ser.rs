@@ -7,9 +7,9 @@
 use ::serde::Serialize;
 
 use crate::{
+	Config, Error,
 	format::{Type, VarInt},
 	io::Output,
-	Config, Error,
 };
 
 /// The serializer for the binary format.
@@ -238,11 +238,7 @@ where
 		variant_index: u32,
 		variant: &'static str,
 	) -> Result<Self::Ok, Self::Error> {
-		if self.use_indices {
-			variant_index.serialize(self)
-		} else {
-			variant.serialize(self)
-		}
+		if self.use_indices { variant_index.serialize(self) } else { variant.serialize(self) }
 	}
 
 	#[inline]

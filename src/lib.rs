@@ -117,7 +117,7 @@ pub mod ser;
 pub mod value;
 
 #[allow(unused_imports, reason = "Different feature sets")]
-use ::serde::{de::DeserializeOwned, Deserialize, Serialize};
+use ::serde::{Deserialize, Serialize, de::DeserializeOwned};
 #[cfg(feature = "std")]
 use ::std::io::{Read, Write};
 

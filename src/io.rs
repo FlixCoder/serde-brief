@@ -3,7 +3,7 @@
 #[cfg(feature = "std")]
 use ::std::io::{Read, Write};
 
-use crate::{buffer::Buffer, Error, Result};
+use crate::{Error, Result, buffer::Buffer};
 
 /// Generic interface for reading bytes from somewhere.
 pub trait Input<'de> {
@@ -106,7 +106,7 @@ where
 
 		match self.reader.read_exact(buffer) {
 			Err(err) if err.kind() == ::std::io::ErrorKind::UnexpectedEof => {
-				return Err(Error::UnexpectedEnd)
+				return Err(Error::UnexpectedEnd);
 			}
 			res => res?,
 		}
@@ -132,7 +132,7 @@ where
 		let write = buffer.reserve_slice(len)?;
 		match self.reader.read_exact(write) {
 			Err(err) if err.kind() == ::std::io::ErrorKind::UnexpectedEof => {
-				return Err(Error::UnexpectedEnd)
+				return Err(Error::UnexpectedEnd);
 			}
 			res => res?,
 		}
@@ -156,7 +156,7 @@ where
 		let result = ::std::io::copy(&mut skip, &mut ::std::io::sink());
 		match result {
 			Err(err) if err.kind() == ::std::io::ErrorKind::UnexpectedEof => {
-				return Err(Error::UnexpectedEnd)
+				return Err(Error::UnexpectedEnd);
 			}
 			Ok(bytes) if bytes != to_write => return Err(Error::UnexpectedEnd),
 			res => {
