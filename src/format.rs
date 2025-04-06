@@ -158,6 +158,7 @@ macro_rules! impl_var_int_signed {
 			impl VarInt for $t {
 				#[inline]
 				#[cfg_attr(feature = "tracing", ::tracing::instrument(skip_all))]
+				#[allow(clippy::cast_sign_loss, reason = "We explicitly want this here")]
 				fn encode<O: Output>(&self, output: &mut O) -> Result<()> {
 					let value = if self.is_negative() {
 						self.rotate_left(1).wrapping_neg()
@@ -187,7 +188,7 @@ impl_var_int_signed!(u8 => i8, u16 => i16, u32 => i32, u64 => i64, u128 => i128,
 /// Returns the maximum number of bytes required to encode T.
 pub const fn varint_max<T: Sized>() -> usize {
 	let bits = ::core::mem::size_of::<T>() * 8;
-	(bits + 6) / 7
+	bits.div_ceil(7)
 }
 
 #[cfg(test)]
@@ -268,7 +269,7 @@ mod tests {
 
 		let bytes = &[0xFF, 0xFF, 0x03];
 		let value = u16::decode(&mut bytes.as_slice()).unwrap();
-		assert_eq!(value, 65535);
+		assert_eq!(value, 0xFFFF);
 
 		let bytes = &[0xFF, 0xFF, 0x07];
 		let result = u16::decode(&mut bytes.as_slice());
@@ -304,10 +305,10 @@ mod tests {
 
 		let mut bytes = [0; i32::MAX_BYTES];
 		let mut output = bytes.as_mut_slice();
-		32767_i32.encode(&mut output).unwrap();
+		0x7FFF_i32.encode(&mut output).unwrap();
 		assert_eq!(&bytes[0 .. 3], &[0xFE, 0xFF, 0x03]);
 		let mut output = bytes.as_mut_slice();
-		(-32768_i32).encode(&mut output).unwrap();
+		(-0x8000_i32).encode(&mut output).unwrap();
 		assert_eq!(&bytes[0 .. 3], &[0xFF, 0xFF, 0x03]);
 	}
 
@@ -337,11 +338,11 @@ mod tests {
 
 		let bytes = &[0xFE, 0xFF, 0x03];
 		let value = i16::decode(&mut bytes.as_slice()).unwrap();
-		assert_eq!(value, 32767);
+		assert_eq!(value, 0x7FFF);
 
 		let bytes = &[0xFF, 0xFF, 0x03];
 		let value = i16::decode(&mut bytes.as_slice()).unwrap();
-		assert_eq!(value, -32768);
+		assert_eq!(value, -0x8000);
 
 		let bytes = &[0xFF, 0xFF, 0x07];
 		let result = i16::decode(&mut bytes.as_slice());

@@ -191,12 +191,14 @@ impl<'a> Value<'a> {
 
 	/// Return the inner bytes if this is a [Value::Bytes].
 	#[must_use]
+	#[expect(clippy::missing_const_for_fn, reason = "False positive")]
 	pub fn as_bytes(&self) -> Option<&[u8]> {
 		if let Value::Bytes(v) = self { Some(v) } else { None }
 	}
 
 	/// Return the inner string if this is a [Value::String].
 	#[must_use]
+	#[expect(clippy::missing_const_for_fn, reason = "False positive")]
 	pub fn as_string(&self) -> Option<&str> {
 		if let Value::String(v) = self { Some(v) } else { None }
 	}
@@ -219,7 +221,7 @@ impl<'a> Value<'a> {
 		match self.into_owned().0 {
 			Value::Array(arr) => Iter::new(arr.into_iter()),
 			Value::Map(map) => Iter::new(map.into_iter().map(|(_key, value)| value)),
-			_ => Iter::new([].into_iter()),
+			_ => Iter::new(::core::iter::empty()),
 		}
 	}
 }
@@ -630,7 +632,7 @@ impl<'a> From<Option<Value<'a>>> for Value<'a> {
 
 impl From<()> for Value<'_> {
 	#[inline]
-	fn from(_: ()) -> Self {
+	fn from((): ()) -> Self {
 		Value::Null
 	}
 }

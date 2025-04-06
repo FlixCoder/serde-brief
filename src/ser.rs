@@ -562,7 +562,7 @@ pub struct StructSerializer<'a, O> {
 impl<'a, O> StructSerializer<'a, O> {
 	/// Create a new struct serializer.
 	#[must_use]
-	fn new(serializer: &'a mut Serializer<O>) -> Self {
+	const fn new(serializer: &'a mut Serializer<O>) -> Self {
 		Self { serializer, field_index: 0 }
 	}
 }

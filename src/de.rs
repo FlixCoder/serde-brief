@@ -100,6 +100,7 @@ where
 
 	/// Deserialize a usize/isize and visit it, regardless of size.
 	#[cfg_attr(feature = "tracing", ::tracing::instrument(skip_all))]
+	#[allow(clippy::cast_possible_truncation, reason = "Integer casting is necessary")]
 	fn deserialize_ptr<V>(&mut self, visitor: V) -> Result<V::Value>
 	where
 		V: Visitor<'de>,
@@ -177,6 +178,7 @@ where
 
 	/// Deserialize an unsigned integer.
 	#[cfg_attr(feature = "tracing", ::tracing::instrument(skip_all))]
+	#[allow(clippy::cast_possible_truncation, reason = "Integer casting is necessary")]
 	fn deserialize_unsigned_int<V>(&mut self, visitor: V) -> Result<V::Value>
 	where
 		V: Visitor<'de>,
@@ -209,6 +211,7 @@ where
 
 	/// Deserialize a signed integer.
 	#[cfg_attr(feature = "tracing", ::tracing::instrument(skip_all))]
+	#[allow(clippy::cast_possible_truncation, reason = "Integer casting is necessary")]
 	fn deserialize_signed_int<V>(&mut self, visitor: V) -> Result<V::Value>
 	where
 		V: Visitor<'de>,

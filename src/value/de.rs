@@ -413,7 +413,9 @@ impl<'de> ::serde::de::Deserializer<'de> for ValueDeserializer<'de> {
 		V: serde::de::Visitor<'de>,
 	{
 		match self.0 {
-			Value::Integer(Integer::Unsigned(int)) => {
+			Value::Integer(Integer::Unsigned(int)) =>
+			{
+				#[expect(clippy::cast_possible_truncation, reason = "Enum discriminators are i32")]
 				visitor.visit_enum((int as u32).into_deserializer())
 			}
 			Value::String(s) => visitor.visit_enum(s.as_ref().into_deserializer()),
@@ -605,6 +607,7 @@ where
 	V: ::serde::de::Visitor<'de>,
 {
 	#[allow(clippy::cast_lossless, reason = "We won't change it")]
+	#[allow(clippy::cast_possible_truncation, reason = "Integer casting is necessary")]
 	match int {
 		Integer::Unsigned(int) if int <= u8::MAX as u128 => visitor.visit_u8(int as u8),
 		Integer::Unsigned(int) if int <= u16::MAX as u128 => visitor.visit_u16(int as u16),
@@ -629,6 +632,7 @@ where
 
 impl<'a, 'de> From<&'a Value<'de>> for Unexpected<'a> {
 	fn from(value: &'a Value<'de>) -> Self {
+		#[allow(clippy::cast_possible_truncation, reason = "Integer casting is necessary")]
 		match value {
 			Value::Null => Unexpected::Unit,
 			Value::Bool(b) => Unexpected::Bool(*b),

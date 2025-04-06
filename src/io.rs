@@ -239,7 +239,7 @@ impl<const N: usize> Output for ::heapless::Vec<u8, N> {
 	#[inline]
 	#[cfg_attr(feature = "tracing", ::tracing::instrument(skip_all))]
 	fn write_all(&mut self, bytes: &[u8]) -> Result<()> {
-		self.extend_from_slice(bytes).map_err(|_| Error::BufferTooSmall)
+		self.extend_from_slice(bytes).map_err(|()| Error::BufferTooSmall)
 	}
 }
 
@@ -480,7 +480,7 @@ mod tests {
 		}
 
 		let borrowed = input.read_bytes(10, buffer.as_mut()).unwrap();
-		let slice = borrowed.unwrap_or(buffer.as_ref().map_or(&[], |b| b.as_slice()));
+		let slice = borrowed.unwrap_or_else(|| buffer.as_ref().map_or(&[], |b| b.as_slice()));
 		assert_eq!(slice.len(), 10);
 		assert_eq!(slice, [5; 10].as_slice());
 
@@ -489,7 +489,7 @@ mod tests {
 		}
 
 		let borrowed = input.read_bytes(5, buffer.as_mut()).unwrap();
-		let slice = borrowed.unwrap_or(buffer.as_ref().map_or(&[], |b| b.as_slice()));
+		let slice = borrowed.unwrap_or_else(|| buffer.as_ref().map_or(&[], |b| b.as_slice()));
 		assert_eq!(slice.len(), 5);
 		assert_eq!(slice, [5; 5].as_slice());
 

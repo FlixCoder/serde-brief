@@ -1,5 +1,10 @@
 //! Simple serialization/deserialization example.
-#![allow(clippy::missing_docs_in_private_items, clippy::unwrap_used, reason = "Example")]
+#![allow(
+	clippy::tests_outside_test_module,
+	clippy::missing_docs_in_private_items,
+	clippy::unwrap_used,
+	reason = "Example"
+)]
 
 use serde::{Deserialize, Serialize};
 
