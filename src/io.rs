@@ -84,6 +84,10 @@ where
 		if let Some(byte) = self.next_byte.take() {
 			Ok(byte)
 		} else {
+			#[expect(
+				clippy::unbuffered_bytes,
+				reason = "User responsible of providing buffered read"
+			)]
 			let mut bytes = self.reader.by_ref().bytes();
 			let byte = bytes.next().ok_or_else(|| Error::UnexpectedEnd)??;
 			Ok(byte)
@@ -239,7 +243,7 @@ impl<const N: usize> Output for ::heapless::Vec<u8, N> {
 	#[inline]
 	#[cfg_attr(feature = "tracing", ::tracing::instrument(skip_all))]
 	fn write_all(&mut self, bytes: &[u8]) -> Result<()> {
-		self.extend_from_slice(bytes).map_err(|()| Error::BufferTooSmall)
+		self.extend_from_slice(bytes).map_err(|_| Error::BufferTooSmall)
 	}
 }
 
@@ -266,6 +270,7 @@ where
 
 
 /// Wrapper for generic reader types as [Output].
+/// It is highly recommended to only pass in buffered readers here for performance reasons.
 #[allow(dead_code, reason = "Different feature sets")]
 #[derive(Debug)]
 pub struct IoReader<R> {

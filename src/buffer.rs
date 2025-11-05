@@ -97,14 +97,14 @@ impl<const N: usize> Buffer for ::heapless::Vec<u8, N> {
 
 	#[cfg_attr(feature = "tracing", ::tracing::instrument(skip(self, bytes)))]
 	fn extend_from_slice(&mut self, bytes: &[u8]) -> Result<()> {
-		self.extend_from_slice(bytes).map_err(|()| Error::BufferTooSmall)
+		self.extend_from_slice(bytes).map_err(|_| Error::BufferTooSmall)
 	}
 
 	#[cfg_attr(feature = "tracing", ::tracing::instrument(skip(self)))]
 	fn reserve_slice(&mut self, len: usize) -> Result<&mut [u8]> {
 		let prev = self.len();
 		self.resize(prev.checked_add(len).ok_or_else(|| Error::UsizeOverflow)?, 0)
-			.map_err(|()| Error::BufferTooSmall)?;
+			.map_err(|_| Error::BufferTooSmall)?;
 		Ok(self.as_mut_slice().split_at_mut(prev).1)
 	}
 }

@@ -94,6 +94,7 @@ impl TryFrom<u8> for Type {
 }
 
 /// The variable-length integer encoding implementation.
+#[allow(unused, reason = "False positive, that only appears without this lint?")]
 pub trait VarInt: Sized {
 	/// Encode the integer into bytes.
 	fn encode<O: Output>(&self, output: &mut O) -> Result<()>;

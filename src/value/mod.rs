@@ -191,14 +191,12 @@ impl<'a> Value<'a> {
 
 	/// Return the inner bytes if this is a [Value::Bytes].
 	#[must_use]
-	#[expect(clippy::missing_const_for_fn, reason = "False positive")]
 	pub fn as_bytes(&self) -> Option<&[u8]> {
 		if let Value::Bytes(v) = self { Some(v) } else { None }
 	}
 
 	/// Return the inner string if this is a [Value::String].
 	#[must_use]
-	#[expect(clippy::missing_const_for_fn, reason = "False positive")]
 	pub fn as_string(&self) -> Option<&str> {
 		if let Value::String(v) = self { Some(v) } else { None }
 	}
